@@ -10,62 +10,61 @@ plugins {
 	id("io.gitlab.arturbosch.detekt")
 }
 
-group = "template"
-version = "1.0-SNAPSHOT"
+group = "quest.laxla"
+version = "0.0.1"
 
 repositories {
 	google()
 	mavenCentral()
 
-	maven {
+	maven("https://oss.sonatype.org/content/repositories/snapshots") {
 		name = "Sonatype Snapshots (Legacy)"
-		url = uri("https://oss.sonatype.org/content/repositories/snapshots")
 	}
 
-	maven {
+	maven("https://s01.oss.sonatype.org/content/repositories/snapshots") {
 		name = "Sonatype Snapshots"
-		url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots")
 	}
 }
 
+val detekt: String by project
+val kordex: String by project
+val serialization: String by project
+val logback: String by project
+val slf4j: String by project
+val klogging: String by project
+
 dependencies {
-	detektPlugins(libs.detekt)
+	implementation(kotlin("stdlib"))
+	implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serialization")
+	implementation("com.kotlindiscord.kord.extensions:kord-extensions:$kordex")
 
-	implementation(libs.kord.extensions)
-	implementation(libs.kotlin.stdlib)
-	implementation(libs.kx.ser)
+	implementation("io.github.oshai:kotlin-logging:$klogging")
+	runtimeOnly("org.slf4j:slf4j-api:$slf4j")
+	runtimeOnly("ch.qos.logback:logback-classic:$logback")
 
-	// Logging dependencies
-	implementation(libs.groovy)
-	implementation(libs.jansi)
-	implementation(libs.logback)
-	implementation(libs.logback.groovy)
-	implementation(libs.logging)
+	detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:$detekt")
 }
 
 application {
-	mainClass.set("template.AppKt")
+	mainClass = "quest.laxla.supertrouper.AppKt"
 }
 
-tasks.withType<KotlinCompile> {
-	// Current LTS version of Java
-	kotlinOptions.jvmTarget = "17"
+val jvm: String by project
 
-	kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
-}
+tasks.withType<KotlinCompile> { kotlinOptions.jvmTarget = jvm }
 
 tasks.jar {
 	manifest {
 		attributes(
-			"Main-Class" to "template.AppKt"
+			"Main-Class" to application.mainClass.get()
 		)
 	}
 }
 
 java {
-	// Current LTS version of Java
-	sourceCompatibility = JavaVersion.VERSION_17
-	targetCompatibility = JavaVersion.VERSION_17
+	val java = JavaVersion.toVersion(jvm)
+	sourceCompatibility = java
+	targetCompatibility = java
 }
 
 detekt {
