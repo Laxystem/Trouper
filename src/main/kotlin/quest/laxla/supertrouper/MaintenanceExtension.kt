@@ -1,16 +1,18 @@
 package quest.laxla.supertrouper
 
+import com.kotlindiscord.kord.extensions.checks.isBotAdmin
 import com.kotlindiscord.kord.extensions.extensions.publicSlashCommand
-import dev.kord.common.entity.Permission
-import dev.kord.common.entity.Snowflake
+import com.kotlindiscord.kord.extensions.extensions.slashCommandCheck
 
 class MaintenanceExtension : TrouperExtension() {
 	override suspend fun setup() {
+		slashCommandCheck {
+			isBotAdmin()
+		}
+
 		publicSlashCommand {
 			name = "stop"
 			description = "WARNING: Stops the bot completely."
-			guildId = Snowflake(officialServer)
-			requirePermission(Permission.Administrator)
 
 			action {
 				//language=Markdown

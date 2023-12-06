@@ -2,7 +2,9 @@ package quest.laxla.supertrouper
 
 import com.kotlindiscord.kord.extensions.extensions.Extension
 
+private const val NameRegexGroup = "name"
+
 abstract class TrouperExtension : Extension() {
 	final override val name: String = this::class.simpleName!!.substringBeforeLast("Extension")
-		.replace("([A-Z])".toRegex()) { '-' + it.groups.single()!!.value.lowercase() }.removePrefix("-")
+		.replace("(?<$NameRegexGroup>[A-Z])".toRegex()) { '-' + it.groups[NameRegexGroup]!!.value.lowercase() }.removePrefix("-")
 }
