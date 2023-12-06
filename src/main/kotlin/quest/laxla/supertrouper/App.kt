@@ -2,20 +2,21 @@ package quest.laxla.supertrouper
 
 import com.kotlindiscord.kord.extensions.ExtensibleBot
 import com.kotlindiscord.kord.extensions.utils.env
-import dev.kord.common.entity.Snowflake
+import com.kotlindiscord.kord.extensions.utils.envOrNull
 import kotlinx.coroutines.runBlocking
 
-private val token = env("token")
-val officialServer = env("official_server")
+private val token = env("TOKEN")
+private val testingServer = envOrNull("TESTING_SERVER")
 
 fun main() = runBlocking {
 	ExtensibleBot(token) {
-		extensions {
-			add(::MaintenanceExtension)
+		applicationCommands {
+			testingServer?.let { defaultGuild(it) }
 		}
 
-		applicationCommands {
-			defaultGuild(Snowflake(officialServer))
+		extensions {
+			add(::MaintenanceExtension)
+			add(::PrivateMassagingExtension)
 		}
 	}.start()
 }
