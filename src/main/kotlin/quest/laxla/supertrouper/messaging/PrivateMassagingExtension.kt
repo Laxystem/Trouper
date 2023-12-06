@@ -57,7 +57,7 @@ class PrivateMassagingExtension : TrouperExtension() {
 
 		ephemeralSlashCommand(::TargetedArguments) slash@{
 			name = "sync"
-			description = "Syncs a private message channel's permissions with the category."
+			description = "Syncs a private message channel's permissions with the category"
 
 			requirePermission(Permission.ManageRoles)
 
