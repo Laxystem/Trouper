@@ -20,9 +20,7 @@ import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.firstOrNull
 
 const val PrivateMessagesCategoryName = "Private Messages"
-const val InviteSelect = "PM.invite"
 const val PingButton = "PM.ping"
-const val ManagePmButton = "PM.manage"
 const val UserIdCapturingGroup = "userID"
 val memberLimit = envOrNull("AUTOMATIC_CHANNEL_CREATION_MEMBER_LIMIT")?.toInt() ?: 30
 val pmMemberPermissions = Permission.ViewChannel + Permission.ReadMessageHistory
