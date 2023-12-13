@@ -8,12 +8,13 @@ import kotlinx.coroutines.runBlocking
 import quest.laxla.supertrouper.messaging.PrivateMassagingExtension
 
 private val token = env("TOKEN")
-private val testingServer = envOrNull("TESTING_SERVER")
+val officialServer = env("OFFICIAL_SERVER")
+val isDevelopmentEnvironment = envOrNull("IS_DEV_ENV").toBoolean()
 
 fun main() = runBlocking {
 	ExtensibleBot(token) {
 		applicationCommands {
-			testingServer?.let { defaultGuild(it) }
+			if (isDevelopmentEnvironment) defaultGuild(officialServer)
 		}
 
 		extensions {

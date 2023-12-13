@@ -23,30 +23,32 @@ fun PermissionOverwritesBuilder.addOverwrite(
 
 fun PermissionOverwritesBuilder.sync(
 	vararg overrides: Overwrite,
-	defaults: Iterable<PermissionOverwriteEntity>
-) = sync(overrides.asIterable(), defaults)
+	defaults: Iterable<PermissionOverwriteEntity>,
+	neverAllow: Permissions = Permissions()
+) = sync(overrides.asIterable(), defaults, neverAllow)
 
 fun PermissionOverwritesBuilder.sync(
 	overrides: Iterable<Overwrite>,
-	defaults: Iterable<PermissionOverwriteEntity>
+	defaults: Iterable<PermissionOverwriteEntity>,
+	neverAllow: Permissions = Permissions()
 ) {
 	val permissions = mutableMapOf<Overwrite, PermissionOverwriteEntity>()
 
 	defaults.forEach { default ->
 		val override = overrides.find { it.id == default.target && it.type == default.type }
 
-		if (override == null) addOverwrite(default.target, default.type, default.allowed, default.denied)
+		if (override == null) addOverwrite(default.target, default.type, default.allowed - neverAllow, default.denied)
 		else permissions[override] = default
 	}
 
 	overrides.forEach { override ->
 		val default = permissions[override]
 
-		if (default == null) addOverwrite(override)
+		if (default == null) addOverwrite(override.copy(allow = override.allow - neverAllow))
 		else addOverwrite(
 			default.target,
 			default.type,
-			default.allowed - default.denied - override.deny + override.allow,
+			default.allowed - default.denied + override.allow - override.deny - neverAllow,
 			default.denied - default.allowed - override.allow + override.deny
 		)
 	}

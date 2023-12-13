@@ -36,7 +36,7 @@ val klogging: String by project
 dependencies {
 	implementation(kotlin("stdlib"))
 	implementation(kotlin("reflect"))
-	implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serialization")
+	implementation("org.jetbrains.kotlinx:kotlinx-serialization-protobuf:$serialization")
 
 	implementation("com.kotlindiscord.kord.extensions:kord-extensions:$kordex")
 
