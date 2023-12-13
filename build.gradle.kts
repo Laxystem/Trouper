@@ -7,7 +7,6 @@ plugins {
 	kotlin("plugin.serialization")
 
 	id("com.github.johnrengelman.shadow")
-	id("io.gitlab.arturbosch.detekt")
 }
 
 group = "quest.laxla"
@@ -26,7 +25,6 @@ repositories {
 	}
 }
 
-val detekt: String by project
 val kordex: String by project
 val serialization: String by project
 val logback: String by project
@@ -43,8 +41,6 @@ dependencies {
 	implementation("io.github.oshai:kotlin-logging:$klogging")
 	runtimeOnly("org.slf4j:slf4j-api:$slf4j")
 	runtimeOnly("ch.qos.logback:logback-classic:$logback")
-
-	detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:$detekt")
 }
 
 application {
@@ -67,10 +63,4 @@ java {
 	val java = JavaVersion.toVersion(jvm)
 	sourceCompatibility = java
 	targetCompatibility = java
-}
-
-detekt {
-	buildUponDefaultConfig = true
-
-	config.from(rootProject.files("detekt.yml"))
 }
