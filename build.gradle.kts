@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.util.removeSuffixIfPresent
 
 plugins {
 	application
@@ -10,7 +11,7 @@ plugins {
 }
 
 group = "quest.laxla"
-version = file(".version").readText()
+version = file(".version").readText().removeSuffixIfPresent("\n")
 
 repositories {
 	google()
