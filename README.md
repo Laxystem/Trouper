@@ -1,6 +1,6 @@
 # Trouper
 
-<img src="assets/SuperTrouper_128x.png" align="right"/>
+<img src="assets/SuperTrouper_128x.png" align="right"/><a href="https://ko-fi.com/M4M7S6JSN"><img src=https://ko-fi.com/img/githubbutton_sm.svg align="right"></a>
 
 ## Running
 
