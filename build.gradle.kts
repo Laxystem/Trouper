@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "quest.laxla"
-version = "0.0.1"
+version = file(".version").readText()
 
 repositories {
 	google()
@@ -43,13 +43,22 @@ dependencies {
 	runtimeOnly("ch.qos.logback:logback-classic:$logback")
 }
 
+val generatedResources = layout.buildDirectory.dir("generated/resources")
+
+tasks.processResources {
+	from(generatedResources)
+
+	doFirst {
+		generatedResources.orNull?.run {
+			asFile.mkdirs()
+			file(".version").asFile.writeText(version.toString())
+		}
+	}
+}
+
 application {
 	mainClass = "quest.laxla.trouper.AppKt"
 }
-
-val jvm: String by project
-
-tasks.withType<KotlinCompile> { kotlinOptions.jvmTarget = jvm }
 
 tasks.jar {
 	manifest {
@@ -58,6 +67,10 @@ tasks.jar {
 		)
 	}
 }
+
+val jvm: String by project
+
+tasks.withType<KotlinCompile> { kotlinOptions.jvmTarget = jvm }
 
 java {
 	val java = JavaVersion.toVersion(jvm)

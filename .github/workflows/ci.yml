@@ -7,6 +7,8 @@ on:
       - develop
 
   pull_request:
+    branches-ignore:
+      - root
 
 jobs:
   build:
@@ -22,19 +24,11 @@ jobs:
           java-version: 17
           distribution: temurin
 
-      - name: Gradle (Build)
+      - name: Build
         uses: gradle/gradle-build-action@v2
 
         with:
           arguments: build
-
-      - name: Upload artifacts (Main JAR)
-        uses: actions/upload-artifact@v3
-
-        with:
-          name: Main JAR
-          path: build/libs/*-all.jar
-          if-no-files-found: error
 
       - name: Upload artifacts (JARs)
         uses: actions/upload-artifact@v3

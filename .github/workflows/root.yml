@@ -11,6 +11,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-tags: true
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -19,25 +21,38 @@ jobs:
           java-version: 17
           distribution: temurin
 
-      - name: Gradle (Build)
+      - name: Build
         uses: gradle/gradle-build-action@v2
 
         with:
           arguments: build
           dependency-graph: generate-and-submit
 
-      - name: Upload artifacts (Main JAR)
-        uses: actions/upload-artifact@v3
-
-        with:
-          name: Main JAR
-          path: build/libs/*-all.jar
-          if-no-files-found: error
-
-      - name: Upload artifacts (JARs)
+      - name: Upload artifacts
         uses: actions/upload-artifact@v3
 
         with:
           name: JARs
           path: build/libs/*.jar
           if-no-files-found: warn
+
+      - name: Validate version
+        id: version
+        run: |
+          VERSION=$(cat .version)
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+
+          if git show-ref --tags --verify --quiet "refs/tags/${VERSION}"; then
+            echo "Version ${VERSION} was already released"
+            exit 0
+          fi
+
+      - name: Release artifacts
+        uses: marvinpinto/action-automatic-releases@v1
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: false
+          automatic_release_tag: ${{ steps.version.outputs.version }}
+          files: |
+            build/libs/*.jar
+            LICENSE.md

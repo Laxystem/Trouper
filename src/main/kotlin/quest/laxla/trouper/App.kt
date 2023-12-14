@@ -15,6 +15,7 @@ val license = envOrNull("LICENSE")
 val licenseUrl = envOrNull("LICENSE_URL")
 val donateUrl = envOrNull("DONATE_URL")
 val repoUrl = envOrNull("REPO_URL")
+val version = AboutExtension::class.java.getResourceAsStream("/.version")?.bufferedReader()?.use { it.readText() }
 
 fun main() = runBlocking {
 	ExtensibleBot(token) {

@@ -32,7 +32,7 @@ class AboutExtension : TrouperExtension() {
 		allowedMentions()
 
 		embed {
-			title = "About ${self.effectiveName}"
+			title = "About ${self.effectiveName}" + if (version == null) "" else " `$version`"
 			thumbnail { url = avatar }
 
 			if (isDevelopmentEnvironment) field {
