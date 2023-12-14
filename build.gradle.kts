@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.util.removeSuffixIfPresent
 
 plugins {
 	application
@@ -7,11 +8,10 @@ plugins {
 	kotlin("plugin.serialization")
 
 	id("com.github.johnrengelman.shadow")
-	id("io.gitlab.arturbosch.detekt")
 }
 
 group = "quest.laxla"
-version = "0.0.1"
+version = file(".version").readText().removeSuffixIfPresent("\n")
 
 repositories {
 	google()
@@ -26,7 +26,6 @@ repositories {
 	}
 }
 
-val detekt: String by project
 val kordex: String by project
 val serialization: String by project
 val logback: String by project
@@ -35,23 +34,32 @@ val klogging: String by project
 
 dependencies {
 	implementation(kotlin("stdlib"))
-	implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serialization")
+	implementation(kotlin("reflect"))
+	implementation("org.jetbrains.kotlinx:kotlinx-serialization-protobuf:$serialization")
+
 	implementation("com.kotlindiscord.kord.extensions:kord-extensions:$kordex")
 
 	implementation("io.github.oshai:kotlin-logging:$klogging")
 	runtimeOnly("org.slf4j:slf4j-api:$slf4j")
 	runtimeOnly("ch.qos.logback:logback-classic:$logback")
+}
 
-	detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:$detekt")
+val generatedResources = layout.buildDirectory.dir("generated/resources")
+
+tasks.processResources {
+	from(generatedResources)
+
+	doFirst {
+		generatedResources.orNull?.run {
+			asFile.mkdirs()
+			file(".version").asFile.writeText(version.toString())
+		}
+	}
 }
 
 application {
-	mainClass = "quest.laxla.supertrouper.AppKt"
+	mainClass = "quest.laxla.trouper.AppKt"
 }
-
-val jvm: String by project
-
-tasks.withType<KotlinCompile> { kotlinOptions.jvmTarget = jvm }
 
 tasks.jar {
 	manifest {
@@ -61,14 +69,12 @@ tasks.jar {
 	}
 }
 
+val jvm: String by project
+
+tasks.withType<KotlinCompile> { kotlinOptions.jvmTarget = jvm }
+
 java {
 	val java = JavaVersion.toVersion(jvm)
 	sourceCompatibility = java
 	targetCompatibility = java
-}
-
-detekt {
-	buildUponDefaultConfig = true
-
-	config.from(rootProject.files("detekt.yml"))
 }
