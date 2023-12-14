@@ -1,4 +1,6 @@
-# Super Trouper
+# Trouper
+
+<img src="assets/SuperTrouper_128x.png" align="right"/>
 
 ## Running
 
