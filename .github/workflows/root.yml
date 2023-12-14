@@ -10,7 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
         with:
           fetch-tags: true
 
@@ -44,7 +45,7 @@ jobs:
 
           if git show-ref --tags --verify --quiet "refs/tags/${VERSION}"; then
             echo "Version ${VERSION} was already released"
-            exit 0
+            exit 1
           fi
 
       - name: Release artifacts
