@@ -1,11 +1,11 @@
-package quest.laxla.supertrouper
+package quest.laxla.trouper
 
 import com.kotlindiscord.kord.extensions.ExtensibleBot
 import com.kotlindiscord.kord.extensions.utils.env
 import com.kotlindiscord.kord.extensions.utils.envOrNull
 import dev.kord.gateway.PrivilegedIntent
 import kotlinx.coroutines.runBlocking
-import quest.laxla.supertrouper.messaging.PrivateMassagingExtension
+import quest.laxla.trouper.messaging.PrivateMassagingExtension
 
 private val token = env("TOKEN")
 val officialServer = env("OFFICIAL_SERVER")

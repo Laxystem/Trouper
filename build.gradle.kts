@@ -44,7 +44,7 @@ dependencies {
 }
 
 application {
-	mainClass = "quest.laxla.supertrouper.AppKt"
+	mainClass = "quest.laxla.trouper.AppKt"
 }
 
 val jvm: String by project

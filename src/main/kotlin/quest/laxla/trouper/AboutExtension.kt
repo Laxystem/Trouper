@@ -1,4 +1,4 @@
-package quest.laxla.supertrouper
+package quest.laxla.trouper
 
 import com.kotlindiscord.kord.extensions.components.components
 import com.kotlindiscord.kord.extensions.components.disabledButton
@@ -9,7 +9,7 @@ import dev.kord.core.entity.effectiveName
 import dev.kord.rest.builder.message.allowedMentions
 import dev.kord.rest.builder.message.create.AbstractMessageCreateBuilder
 import dev.kord.rest.builder.message.embed
-import quest.laxla.supertrouper.messaging.PrivateMessagesCategoryName
+import quest.laxla.trouper.messaging.PrivateMessagesCategoryName
 
 class AboutExtension : TrouperExtension() {
 	override suspend fun setup() {
@@ -24,7 +24,6 @@ class AboutExtension : TrouperExtension() {
 			}
 		}
 	}
-
 
 	suspend fun AbstractMessageCreateBuilder.about() {
 		val self = kord.getSelf()
@@ -41,7 +40,7 @@ class AboutExtension : TrouperExtension() {
 				//language=Markdown
 				value = "> This instance is hosted on someone's personal computer, " +
 					"and *may* contain **malicious code** and/or **steal your data**. " +
-					"This is not considered to be an official version of Super Trouper. " +
+					"This is not considered to be an official version of Trouper. " +
 					"Do *not* rely on the lack of this message to determine if an instance is official."
 			}
 

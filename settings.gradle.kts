@@ -10,4 +10,4 @@ pluginManagement {
 	}
 }
 
-rootProject.name = "supertrouper"
+rootProject.name = "Trouper"
