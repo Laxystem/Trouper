@@ -1,4 +1,4 @@
-package quest.laxla.supertrouper
+package quest.laxla.trouper
 
 import com.kotlindiscord.kord.extensions.checks.isBotAdmin
 import com.kotlindiscord.kord.extensions.extensions.publicSlashCommand

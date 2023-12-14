@@ -1,4 +1,4 @@
-package quest.laxla.supertrouper.messaging
+package quest.laxla.trouper.messaging
 
 import com.kotlindiscord.kord.extensions.utils.envOrNull
 import dev.kord.common.entity.ALL

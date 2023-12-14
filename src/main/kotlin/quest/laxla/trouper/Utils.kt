@@ -1,4 +1,4 @@
-package quest.laxla.supertrouper
+package quest.laxla.trouper
 
 import dev.kord.core.entity.Application
 import kotlin.contracts.ExperimentalContracts

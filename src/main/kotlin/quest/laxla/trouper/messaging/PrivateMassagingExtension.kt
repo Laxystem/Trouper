@@ -1,4 +1,4 @@
-package quest.laxla.supertrouper.messaging
+package quest.laxla.trouper.messaging
 
 import com.kotlindiscord.kord.extensions.checks.anyGuild
 import com.kotlindiscord.kord.extensions.checks.isNotBot
@@ -27,7 +27,7 @@ import dev.kord.rest.builder.channel.addRoleOverwrite
 import dev.kord.rest.builder.message.actionRow
 import dev.kord.rest.builder.message.embed
 import kotlinx.coroutines.flow.count
-import quest.laxla.supertrouper.*
+import quest.laxla.trouper.*
 
 @PrivilegedIntent
 class PrivateMassagingExtension : TrouperExtension() {
